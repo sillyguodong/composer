@@ -43,10 +43,13 @@ fi
 curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
 chmod +x "${github_action_path}/composer.phar"
 
+# adapt Gitea Actions container mode
+command_string="cp $ACTION_PATH/composer.phar /usr/local/bin/composer && "
+
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
 # arguments according to the action's input values.
-command_string="composer"
+command_string+="composer"
 
 # In case there is need to install private repositories, SSH details are stored
 # in these two places, which are mounted on the Composer docker container later.
@@ -178,8 +181,6 @@ else
 	job_container=""
 fi
 
-command_string+="cp $ACTION_PATH/composer.phar /usr/local/bin/composer && "
-
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
@@ -204,6 +205,7 @@ do
 	fi
 done <<<$(env)
 
+echo "name=job_container::${job_container}" >> $GITHUB_OUTPUT
 echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
