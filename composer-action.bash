@@ -215,6 +215,7 @@ echo "name=working_dir::${working_dir}" >> output.log
 echo "name=memory_limit::${memory_limit}" >> output.log
 echo "name=docker_tag::${docker_tag}" >> output.log
 echo "name=full_command::${command_string}" >> output.log
+echo "name=action_path::${action_path}" >> output.log
 
 echo "name=job_container::${job_container}" >> $GITHUB_OUTPUT
 echo "name=working_dir::${working_dir}" >> $GITHUB_OUTPUT
