@@ -47,7 +47,7 @@ chmod +x "${github_action_path}/composer.phar"
 action_path="$ACTION_PATH"
 # command_string=""
 # cp_string="cp ${action_path:4}/composer.phar /usr/local/bin/composer"
-command_string="bash -c cp ${action_path:4}/composer.phar /usr/local/bin/composer && "
+command_string="cp ${action_path:4}/composer.phar /usr/local/bin/composer && "
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
@@ -209,6 +209,12 @@ do
 		echo "$line" >> DOCKER_ENV
 	fi
 done <<<$(env)
+
+echo "name=job_container::${job_container}" >> output.log
+echo "name=working_dir::${working_dir}" >> output.log
+echo "name=memory_limit::${memory_limit}" >> output.log
+echo "name=docker_tag::${docker_tag}" >> output.log
+echo "name=full_command::${command_string}" >> output.log
 
 echo "name=job_container::${job_container}" >> $GITHUB_OUTPUT
 echo "name=working_dir::${working_dir}" >> $GITHUB_OUTPUT
