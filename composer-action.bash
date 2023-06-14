@@ -223,6 +223,6 @@ docker run  \
 	${memory_limit} \
 	-d \
 	${docker_tag} \
-	/bin/bash
+	sleep 2m
 	# ${command_string}
 
