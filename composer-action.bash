@@ -216,9 +216,9 @@ echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run  \
-	--volumes-from ${job_container}:rw \
+	--volumes-from ${job_container} \
 	--workdir ${working_dir} \
 	--env-file ./DOCKER_ENV \
 	--network my-net \
 	${memory_limit} \
-	${docker_tag} ${command_string}
+	${docker_tag} /bin/bash
