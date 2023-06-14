@@ -44,7 +44,7 @@ curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_u
 chmod +x "${github_action_path}/composer.phar"
 
 # adapt Gitea Actions container mode
-command_string="cp $ACTION_PATH/composer.phar /usr/local/bin/composer && "
+command_string="bash -c cp $ACTION_PATH/composer.phar /usr/local/bin/composer && "
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
