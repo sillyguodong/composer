@@ -216,6 +216,7 @@ echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run  \
+	-d \
 	--volumes-from ${job_container} \
 	--workdir ${working_dir} \
 	--env-file ./DOCKER_ENV \
