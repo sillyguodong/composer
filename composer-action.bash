@@ -215,7 +215,7 @@ echo "name=memory_limit::${memory_limit}" >> $GITHUB_OUTPUT
 echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
-docker run --rm \
+docker run  \
 	--volumes-from ${job_container}:rw \
 	--workdir ${working_dir} \
 	--env-file ./DOCKER_ENV \
