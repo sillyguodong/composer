@@ -223,5 +223,6 @@ docker run  \
 	${memory_limit} \
 	-d \
 	${docker_tag} \
-	${command_string}
+	/bin/bash
+	# ${command_string}
 
