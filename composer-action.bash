@@ -206,6 +206,7 @@ do
 done <<<$(env)
 
 echo "name=job_container::${job_container}" >> $GITHUB_OUTPUT
+echo "name=memory_limit::${memory_limit}" >> $GITHUB_OUTPUT
 echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
