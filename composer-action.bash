@@ -170,6 +170,16 @@ else
   memory_limit=''
 fi
 
+# adapt Gitea Actions's container mode
+if [ -n "$ACTION_JOB_CONTAINER" ]
+then
+	job_container="$ACTION_JOB_CONTAINER"
+else
+	job_container=""
+fi
+
+command_string += "cp $ACTION_PATH/composer.phar /usr/local/bin/composer &&"
+
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
@@ -194,16 +204,13 @@ do
 	fi
 done <<<$(env)
 
+echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run --rm \
-	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
-	--volume ~/.gitconfig:/root/.gitconfig \
-	--volume ~/.ssh:/root/.ssh \
-	--volume "${GITHUB_WORKSPACE}":/app \
-	--volume "/tmp/composer-cache":/tmp/composer-cache \
+	--volumes-from ${job_container}
 	--workdir /app \
 	--env-file ./DOCKER_ENV \
-	--network host \
+	--network my-net \
 	${memory_limit} \
 	${docker_tag} ${command_string}

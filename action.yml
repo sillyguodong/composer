@@ -99,6 +99,8 @@ runs:
         ACTION_SSH_PORT: ${{ inputs.ssh_port }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
         ACTION_MEMORY_LIMIT: ${{ inputs.memory_limit }}
+        ACTION_JOB_CONTAINER: ${{ env.JOB_CONTAINER_NAME  }}
+        ACTION_PATH: ${{ github.action_path }}
       id: composer_run
       run: |
         set -e
@@ -107,5 +109,5 @@ runs:
       shell: bash
 
 branding:
-  icon: 'package'
-  color: 'purple'
+  icon: "package"
+  color: "purple"
