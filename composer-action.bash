@@ -46,7 +46,7 @@ chmod +x "${github_action_path}/composer.phar"
 # adapt Gitea Actions container mode
 mkdir -p /usr/local/bin/composer
 action_path="$ACTION_PATH"
-command_string="bash -c cp ${action_path:4}/composer.phar /usr/local/bin/composer && "
+command_string="bash -c mv ${action_path:4}/composer.phar /usr/local/bin/composer && "
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
