@@ -46,7 +46,7 @@ chmod +x "${github_action_path}/composer.phar"
 # adapt Gitea Actions container mode
 action_path="$ACTION_PATH"
 # command_string=""
-command_string="bash -c sudo mkdir /usr/local/bin/composer && cp ${action_path:4}/composer.phar /usr/local/bin/composer && "
+command_string="bash -c mkdir /usr/local/bin/composer && cp ${action_path:4}/composer.phar /usr/local/bin/composer && "
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
@@ -216,7 +216,7 @@ echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run --rm \
-	--volumes-from ${job_container} \
+	--volumes-from ${job_container}:rw \
 	--workdir ${working_dir} \
 	--env-file ./DOCKER_ENV \
 	--network my-net \
