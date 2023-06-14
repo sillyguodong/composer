@@ -178,7 +178,7 @@ else
 	job_container=""
 fi
 
-command_string += "cp $ACTION_PATH/composer.phar /usr/local/bin/composer &&"
+command_string+="cp $ACTION_PATH/composer.phar /usr/local/bin/composer && "
 
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
