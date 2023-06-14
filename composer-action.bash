@@ -95,11 +95,6 @@ then
 	command_string="$command_string $ACTION_COMMAND"
 fi
 
-if [ -n "$ACTION_WORKING_DIR" ]
-then
-	command_string="$command_string --working-dir=$ACTION_WORKING_DIR"
-fi
-
 # If the ACTION_ONLY_ARGS has _not_ been passed, then we build up the arguments
 # that have been specified. The else condition to this if statement allows
 # the developer to specify exactly what arguments to pass to Composer.
@@ -183,6 +178,13 @@ else
 	job_container=""
 fi
 
+if [ -n "$ACTION_WORKING_DIR" ]
+then
+	working_dir="$ACTION_WORKING_DIR"
+else
+	working_dir=""
+fi
+
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
@@ -214,7 +216,7 @@ echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run --rm \
 	--volumes-from ${job_container} \
-	--workdir /app \
+	--workdir ${working_dir} \
 	--env-file ./DOCKER_ENV \
 	--network my-net \
 	${memory_limit} \
