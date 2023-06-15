@@ -224,7 +224,11 @@ echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 # composer container name
 composer_container="${job_container}-composer"
 
-docker_run_cmd="docker run --volumes-from ${job_container} --workdir ${working_dir} --network bridge --name ${composer_container} ${memory_limit} ${docker_tag} ${command_string}"
-echo "name=docker_run_cmd::${docker_run_cmd}" >> output.log
-
-docker run --volumes-from ${job_container} --workdir ${working_dir} --network bridge --name ${composer_container} ${memory_limit} ${docker_tag} /bin/bash -c "${cp_string};${command_string}"
+docker run --rm \
+			--volumes-from ${job_container} \
+			--workdir ${working_dir} \
+			--network bridge \
+			--name ${composer_container} \
+			${memory_limit} \
+			${docker_tag} \
+			/bin/bash -c "${cp_string};${command_string}"
