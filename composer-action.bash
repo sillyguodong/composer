@@ -47,7 +47,7 @@ chmod +x "${github_action_path}/composer.phar"
 action_path="$ACTION_PATH"
 # command_string=""
 # cp_string="cp ${action_path:4}/composer.phar /usr/local/bin/composer"
-command_string="/bin/bash -c 'cp ${action_path:4}/composer.phar /usr/local/bin/composer ; "
+command_string="/bin/bash -c \"cp ${action_path:4}/composer.phar /usr/local/bin/composer ; "
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
@@ -187,7 +187,7 @@ else
 fi
 
 #  adapt Gitea Actions container mode
-command_string+="'"
+command_string+="\""
 
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
