@@ -226,13 +226,11 @@ echo "name=memory_limit::${memory_limit}" >> $GITHUB_OUTPUT
 echo "name=docker_tag::${docker_tag}" >> $GITHUB_OUTPUT
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
-docker run  \
-	--volumes-from ${job_container} \
-	--workdir ${working_dir} \
-	--env-file ./DOCKER_ENV \
-	--network my-net \
-	${memory_limit} \
-	-d \
-	${docker_tag} \
-	${command_string}
+# composer container name
+composer_container="${job_container}-composer"
+
+docker_run_cmd="docker run --volumes-from ${job_container} --workdir ${working_dir} --env-file ./DOCKER_ENV --network my-net --name ${composer_container} ${memory_limit} ${docker_tag} ${command_string}"
+echo "name=docker_run_cmd::${docker_run_cmd}" >> output.log
+
+docker run --volumes-from ${job_container} --workdir ${working_dir} --env-file ./DOCKER_ENV --network my-net --name ${composer_container} ${memory_limit} ${docker_tag} ${command_string}
 
