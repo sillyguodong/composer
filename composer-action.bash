@@ -233,4 +233,3 @@ docker_run_cmd="docker run --volumes-from ${job_container} --workdir ${working_d
 echo "name=docker_run_cmd::${docker_run_cmd}" >> output.log
 
 docker run --volumes-from ${job_container} --workdir ${working_dir} --network bridge --name ${composer_container} ${memory_limit} ${docker_tag} ${command_string}
-
