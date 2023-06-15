@@ -184,9 +184,6 @@ else
 	working_dir=""
 fi
 
-#  adapt Gitea Actions container mode
-command_string+="'"
-
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
