@@ -45,14 +45,12 @@ chmod +x "${github_action_path}/composer.phar"
 
 # adapt Gitea Actions container mode
 action_path="$ACTION_PATH"
-# command_string=""
-# cp_string="cp ${action_path:4}/composer.phar /usr/local/bin/composer"
-command_string="/bin/sh -c \"cp	${action_path:4}/composer.phar	/usr/local/bin/composer;"
+cp_string="cp ${action_path:4}/composer.phar /usr/local/bin/composer"
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
 # arguments according to the action's input values.
-command_string+="composer"
+command_string="composer"
 
 # In case there is need to install private repositories, SSH details are stored
 # in these two places, which are mounted on the Composer docker container later.
@@ -187,7 +185,7 @@ else
 fi
 
 #  adapt Gitea Actions container mode
-command_string+="\""
+command_string+="'"
 
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
@@ -232,4 +230,4 @@ composer_container="${job_container}-composer"
 docker_run_cmd="docker run --volumes-from ${job_container} --workdir ${working_dir} --network bridge --name ${composer_container} ${memory_limit} ${docker_tag} ${command_string}"
 echo "name=docker_run_cmd::${docker_run_cmd}" >> output.log
 
-docker run --volumes-from ${job_container} --workdir ${working_dir} --network bridge --name ${composer_container} ${memory_limit} ${docker_tag} ${command_string}
+docker run --volumes-from ${job_container} --workdir ${working_dir} --network bridge --name ${composer_container} ${memory_limit} ${docker_tag} /bin/bash -c "${cp_string};${command_string}"
